@@ -1,0 +1,15 @@
+<mat-dialog-content fxLayoutAlign="space-evenly center">
+  <div style="text-align:center" color="accent">
+    <mat-icon fxFill style="font-size: 7rem;" color="accent">warning</mat-icon>
+    <mat-chip-list>
+    </mat-chip-list>
+    <mat-chip>{{l('AreYouSure')}}</mat-chip>
+    <mat-chip style="margin-bottom:1rem;">
+        {{l(msg,displayName)}}
+    </mat-chip>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions fxLayoutAlign="space-evenly center">
+  <button mat-raised-button color="primary" mat-dialog-close>{{l('Cancel')}}</button>
+  <button mat-raised-button color="accent" [mat-dialog-close]="true">{{l('Save')}}</button>
+</mat-dialog-actions>

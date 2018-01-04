@@ -1,0 +1,90 @@
+<div class="loading-shade" *ngIf="loading">
+  <mat-progress-spinner *ngIf="loading" mode="indeterminate" diameter="70"></mat-progress-spinner>
+</div>
+<button class="refresh-button" mat-icon-button type="button" (click)="refresh()" [disabled]="saving" color="warn">
+  <mat-icon>refresh</mat-icon>
+  <!-- <span>{{l('Refresh')}}</span> -->
+</button>
+<mat-tab-group>
+  <mat-tab label="{{l('UserInformations')}}">
+    <mat-progress-bar [mode]="saving? 'indeterminate':'Determinate'" class="custom-progress-bar" color="Primary">
+    </mat-progress-bar>
+    <form #ecForm class="form-container" [formGroup]="userGroup" novalidate (ngSubmit)="save()" fxLayout="row" fxLayoutAlign="space-evenly center"
+      fxLayoutWrap>
+      <div fxFlex="20" style="text-align:center">
+        <img src="{{profilePicture}}" width="128" height="128" />
+      </div>
+      <div fxFlex="68" fxFlex.lt-sm="100">
+        <mat-form-field class="form-field" fxFill>
+          <input matInput required formControlName="name" placeholder="{{l('Name')}}">
+        </mat-form-field>
+        <mat-form-field class="form-field" fxFill>
+          <input matInput required formControlName="surname" placeholder="{{l('Surname')}}">
+        </mat-form-field>
+      </div>
+      <div fxFill>
+        <mat-form-field class="form-field" fxFill>
+          <input matInput required formControlName="emailAddress" placeholder="{{l('EmailAddress')}}">
+          <mat-error *ngIf="userGroup.hasError('email','emailAddress')">
+            email error
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field" fxFill>
+          <input matInput formControlName="phoneNumber" placeholder="{{l('PhoneNumber')}}">
+        </mat-form-field>
+        <mat-form-field class="form-field" fxFill>
+          <input matInput required formControlName="userName" placeholder="{{l('UserName')}}">
+        </mat-form-field>
+        <mat-checkbox *ngIf="userId" formControlName="isChangePassword">
+          {{l("ChangePassword")}}
+        </mat-checkbox>
+        <div formGroupName="passwordGroup">
+          <div *ngIf="userGroup.get('isChangePassword').value" class="password-container">
+            <mat-checkbox formControlName="setRandomPassword">
+              {{l("SetRandomPassword")}}
+            </mat-checkbox>
+            <mat-form-field class="form-field" *ngIf="!passGroup.get('setRandomPassword').value" class="form-field" fxFill>
+              <input type="password" matInput formControlName="password" placeholder="{{l('Password')}}">
+              <mat-error *ngIf="passGroup.hasError('pwdError','password')">
+                {{passGroup.getError('pwdError','password')?.desc}}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-field" *ngIf="!passGroup.get('setRandomPassword').value" class="form-field" fxFill>
+              <input type="password" matInput formControlName="passwordRepeat" placeholder="{{l('PasswordRepeat')}}">
+              <mat-error *ngIf="passGroup.get('passwordRepeat').hasError('pwdRptError')">
+                {{passGroup.get('passwordRepeat').getError('pwdRptError')?.desc}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <mat-checkbox formControlName="shouldChangePasswordOnNextLogin">
+          {{l("ShouldChangePasswordOnNextLogin")}}
+        </mat-checkbox>
+        <mat-checkbox formControlName="sendActivationEmail">
+          {{l("SendActivationEmail")}}
+        </mat-checkbox>
+        <mat-checkbox formControlName="isActive">
+          {{l("Active")}}
+        </mat-checkbox>
+        <mat-checkbox formControlName="isLockoutEnabled">
+          {{l("IsLockoutEnabled")}}
+        </mat-checkbox>
+      </div>
+      <div fxFlex="grow" style="margin-top:20px">
+        <button type="submit" [disabled]="saving" mat-raised-button color="primary">{{l('Save')}}</button>
+        <button type="button" (click)="cancel()" [disabled]="saving" mat-raised-button color="accent">{{l('Cancel')}}</button>
+      </div>
+    </form>
+    <!-- {{userGroup.value | json}} {{passwordComplexitySetting | json}} {{this.setRandomPassword}} -->
+  </mat-tab>
+  <mat-tab label="{{l('Roles')}}">
+    <div class="form-container" fxLayoutAlign="start center" fxLayoutWrap>
+      <mat-checkbox *ngFor="let role of roles" fxFlex="grow" [(ngModel)]="role.isAssigned">
+        {{role.roleDisplayName}}
+      </mat-checkbox>
+    </div>
+  </mat-tab>
+  <mat-tab label="{{l('OrganizationUnits')}}">
+    <app-organization-unit-tree #organizationUnitTree></app-organization-unit-tree>
+  </mat-tab>
+</mat-tab-group>

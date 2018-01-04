@@ -1,0 +1,133 @@
+<mat-toolbar color="primary" class="topbar">
+  <button mat-icon-button id="sidenavToggle" (click)="toggleSidenav()" matTooltip="Toggle Hide/Open">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <button *ngIf="sidenav.opened" mat-icon-button id="collapseToggle" fxHide.lt-md (click)="toggleCollapse()" matTooltip="Toggle Collapse"
+    class="toggle-collapsed">
+    <mat-icon>chevron_left</mat-icon>
+  </button>
+  <mat-form-field class="top-language-select-container">
+    <mat-select class="dropdown" #languageSelect="matSelect" [(ngModel)]="currentLanguage" (change)="changeLanguage($event.value.name)">
+      <mat-select-trigger>{{ languageSelect.selected?.value.displayName}}</mat-select-trigger>
+      <mat-option *ngFor="let language of languages" [value]="language">
+        <span [class]="language.icon"></span>
+        {{ language.displayName }}
+      </mat-option>
+    </mat-select>
+    <span matPrefix [class]="languageSelect.selected?.value.icon"></span>
+  </mat-form-field>
+  <span fxFlex></span>
+  <!-- <mat-form-field style="width:100px;">
+    <mat-select>
+      <mat-option *ngFor="let language of languages" [value]="language.name">
+        <span [class]="language.icon"></span> {{language.displayName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field> -->
+  <!-- Top user menu -->
+  <div>
+    <span style="font-size:.875rem">
+      <mat-icon class="small-icon" color="warn">reply</mat-icon>
+      {{shownLoginName}}</span>
+    <button class="img-button" mat-icon-button [matMenuTriggerFor]="currentUserMenu">
+      <img [src]="profilePicture" alt="profilePicture">
+    </button>
+  </div>
+  <mat-menu classList="current-user-menu" #currentUserMenu="matMenu">
+    <button class="user-menu-item" [matMenuTriggerFor]="linkedAccountSubMenu" mat-menu-item>
+      <mat-icon>link</mat-icon>
+      <!-- <mat-icon>all_inclusive</mat-icon> -->
+      {{l("LinkedAccounts")}}
+    </button>
+    <button class="user-menu-item" mat-menu-item (click)="changePassword()">
+      <mat-icon>lock</mat-icon>
+      {{l("ChangePassword")}}
+      <!-- <mat-icon>reply</mat-icon>
+    {{shownLoginName}} -->
+    </button>
+    <button class="user-menu-item" mat-menu-item>
+      <mat-icon>reply</mat-icon>
+      {{l("LoginAttempts")}}
+    </button>
+    <button (click)="changeProfilePicture()" class="user-menu-item" mat-menu-item>
+      <mat-icon>person_outline</mat-icon>
+      {{l("ChangeProfilePicture")}}
+    </button>
+    <button class="user-menu-item" mat-menu-item>
+      <mat-icon>reply</mat-icon>
+      {{l("MySettings")}}
+    </button>
+    <button (click)="logout()" class="user-menu-item" mat-menu-item>
+      <mat-icon>exit_to_app</mat-icon>
+      {{l("Logout")}}
+    </button>
+  </mat-menu>
+
+  <mat-menu #linkedAccountSubMenu="matMenu">
+    <button mat-menu-item *ngFor="let linkedUser of recentlyLinkedUsers" class="user-menu-item" mat-menu-item>
+      <div (click)="switchToLinkedUser(linkedUser)">
+        <mat-icon>account_circle</mat-icon>
+        {{getShownUserName(linkedUser)}}
+      </div>
+    </button>
+    <button (click)="showLinkedAccounts()" class="user-menu-item" mat-menu-item>
+      <mat-icon>settings</mat-icon>
+      {{l("ManageAccounts")}}
+    </button>
+  </mat-menu>
+  <!-- Notification toggle button -->
+  <button class="topbar-button-left" mat-icon-button matTooltip="Notifications" [matMenuTriggerFor]="notificationsMenu">
+    <mat-icon>notifications</mat-icon>
+    <span class="notification-number bg-warn">{{unreadNotificationCount}}</span>
+  </button>
+  <mat-menu classList="notifications-menu" #notificationsMenu="matMenu" overlapTrigger="false" yPosition="below" xPosition="before">
+    <mat-icon class="arrow">arrow_drop_up</mat-icon>
+    <div class="notifications-header" style="background: url(/assets/images/bg/notification_bg.jpg); background-size: cover;">
+      <span>
+        {{unreadNotificationCount}} New notifications
+      </span>
+    </div>
+    <div class="notifications-actions" fxLayoutAlign="space-between center">
+      <span (click)="setAllNotificationsAsRead()" *ngIf="unreadNotificationCount" style="cursor:pointer;" class="mat-color-primary">
+        <mat-icon color="primary">done_all</mat-icon>
+        {{l("SetAllAsRead")}}
+      </span>
+      <span (click)="openNotificationSettingsModal()" style="cursor:pointer;" class="mat-color-primary">
+        <mat-icon color="primary">settings</mat-icon>
+        {{l("Settings")}}
+      </span>
+    </div>
+    <!-- <mat-chip-list fxLayoutAlign="start center" class="notifications-actions">
+        <mat-chip (click)="setAllNotificationsAsRead()" *ngIf="unreadNotificationCount" color="primary" selected="true">{{l("SetAllAsRead")}}</mat-chip>
+        <mat-chip (click)="openNotificationSettingsModal()" color="accent" selected="true">{{l("Settings")}}</mat-chip>
+      </mat-chip-list> -->
+    <!-- <a href="" (click)="setAllNotificationsAsRead()" *ngIf="unreadNotificationCount">{{l("SetAllAsRead")}}</a>
+        <a class="pull-right" (click)="openNotificationSettingsModal()">{{l("Settings")}}</a> -->
+    <mat-nav-list class="notification-list">
+      <mat-list-item class="notification-item" *ngFor="let notification of notifications">
+        <div class="item-content">
+          <mat-icon color="accent">{{notification.icon}}</mat-icon>
+          {{notification.text}}
+        </div>
+        <span [isTrigger]="isTrigger" title="{{notification.time}}" appTopbarTimeago="timeago">{{notification.time}}</span>
+        <span *ngIf="notification.state=='UNREAD'"> -
+          <span class="mat-color-primary" style="cursor:pointer;" (click)="setNotificationAsRead(notification);">{{l("SetAsRead")}}</span>
+        </span>
+      </mat-list-item>
+      <mat-list-item *ngIf="!notifications.length">
+        {{l("ThereIsNoNotification")}}
+      </mat-list-item>
+    </mat-nav-list>
+    <div class="text-center">
+      <span class="mat-color-accent" style="cursor:pointer;" routerLink="/admin/notifications">{{l("SeeAllNotifications")}}</span>
+    </div>
+  </mat-menu>
+  <button class="topbar-button-left" (click)="chatBar.toggle()" mat-icon-button matTooltip="{{l('Message')}}">
+    <mat-icon>chat</mat-icon>
+    <span class="notification-number bg-warn">1</span>
+  </button>
+  <!-- Theme Switcher -->
+  <app-shared-theme-switcher class="topbar-button-left">
+  </app-shared-theme-switcher>
+</mat-toolbar>

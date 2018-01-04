@@ -1,0 +1,145 @@
+<mat-card>
+  <mat-card-header>
+    <div mat-card-avatar>
+      <mat-icon class="icon-card-header">public</mat-icon>
+    </div>
+    <mat-card-title>{{l("Tenants")}}</mat-card-title>
+    <mat-card-subtitle>{{l("TenantsHeaderInfo")}}</mat-card-subtitle>
+  </mat-card-header>
+  <!-- #tenantsForm="ngForm"  -->
+  <form #tenantsForm [formGroup]="tenantsGroup" novalidate fxLayout="row" fxLayoutAlign="space-between center" fxLayoutWrap>
+    <mat-form-field class="form-field" fxFlex="49" fxFlex.lt-sm="100">
+      <input matInput formControlName="filterText" [(ngModel)]="filters.filterText" placeholder="{{l('SearchWithThreeDot')}}">
+      <button #submitBtn mat-raised-button color="accent" matSuffix>
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+    <!-- <span fxHide.lt-sm fxFlex="3"></span> -->
+    <mat-form-field class="form-field" fxFlex="49" fxFlex.lt-sm="100">
+      <input formControlName="selectedEdition" placeholder="Pick one" aria-label="edition" matInput [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let edition of filteredEditions" [value]="edition">
+          {{edition.displayText}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <div formGroupName="subscriptionDateGroup" fxLayout="row" fxLayoutWrap fxLayoutAlign="start center" fxFlex.gt-md="50" fxFlex.lt-lg="100">
+      <!-- <mat-checkbox formControlName="subscriptionEndDateRangeActive" [(ngModel)]="filters.subscriptionEndDateRangeActive" fxFill>
+        {{l('SubscriptionEndDate')}}
+      </mat-checkbox> -->
+      <mat-slide-toggle formControlName="subscriptionEndDateRangeActive" [(ngModel)]="filters.subscriptionEndDateRangeActive">
+        {{l('SubscriptionEndDate')}}
+      </mat-slide-toggle>
+      <span fxFill></span>
+      <mat-form-field [ngClass]="{'datepicker-item-readonly': !filters.subscriptionEndDateRangeActive}">
+        <span matPrefix>from &nbsp;</span>
+        <input matInput [readonly]="!filters.subscriptionEndDateRangeActive" [matDatepicker]="subscriptionEndDateStartPicker" formControlName="subscriptionEndDateStart"
+          [(ngModel)]="filters.subscriptionEndDateStart" placeholder="Choose a date">
+        <mat-datepicker-toggle [disabled]="!filters.subscriptionEndDateRangeActive" matSuffix [for]="subscriptionEndDateStartPicker"></mat-datepicker-toggle>
+        <mat-datepicker #subscriptionEndDateStartPicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field [ngClass]="{'datepicker-item-readonly': !filters.subscriptionEndDateRangeActive}">
+        <span matPrefix>to &nbsp;</span>
+        <input matInput formControlName="subscriptionEndDateEnd" [readonly]="!filters.subscriptionEndDateRangeActive" [(ngModel)]="filters.subscriptionEndDateEnd"
+          [matDatepicker]="subscriptionEndDateEndPicker" placeholder="Choose a date">
+        <mat-datepicker-toggle [disabled]="!filters.subscriptionEndDateRangeActive" matSuffix [for]="subscriptionEndDateEndPicker"></mat-datepicker-toggle>
+        <mat-datepicker #subscriptionEndDateEndPicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div formGroupName="creationDateGroup" fxLayout="row" fxLayoutWrap fxLayoutAlign="start center" fxFlex.gt-md="50" fxFlex.lt-lg="100">
+      <!-- <mat-checkbox formControlName="creationDateRangeActive" [(ngModel)]="filters.creationDateRangeActive" fxFill>{{l('CreationTime')}}</mat-checkbox> -->
+      <mat-slide-toggle formControlName="creationDateRangeActive" [(ngModel)]="filters.creationDateRangeActive">
+        {{l('CreationTime')}}
+      </mat-slide-toggle>
+      <span fxFill></span>
+      <mat-form-field [ngClass]="{'datepicker-item-readonly': !filters.creationDateRangeActive}">
+        <span matPrefix>from &nbsp;</span>
+        <input matInput formControlName="creationDateStart" [readonly]="!filters.creationDateRangeActive" [(ngModel)]="filters.creationDateStart"
+          [matDatepicker]="creationDateStartPicker" placeholder="Choose a date">
+        <mat-datepicker-toggle [disabled]="!filters.creationDateRangeActive" matSuffix [for]="creationDateStartPicker"></mat-datepicker-toggle>
+        <mat-datepicker #creationDateStartPicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field [ngClass]="{'datepicker-item-readonly': !filters.creationDateRangeActive}">
+        <span matPrefix>to &nbsp;</span>
+        <input matInput [matDatepicker]="creationDateEndPicker" [readonly]="!filters.creationDateRangeActive" formControlName="creationDateEnd"
+          [(ngModel)]="filters.creationDateEnd" placeholder="Choose a date disabled">
+        <mat-datepicker-toggle [disabled]="!filters.creationDateRangeActive" matSuffix [for]="creationDateEndPicker"></mat-datepicker-toggle>
+        <mat-datepicker #creationDateEndPicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </form>
+
+  <div class="table-container">
+    <!-- <hr /> -->
+    <hr class="hr-class">
+    <div class="loading-shade" *ngIf="dataSource.isLoadingResults">
+      <!-- <mat-progress-spinner value="100" [mode]="dataSource.isLoadingResults? 'indeterminate':'determinate'">
+      </mat-progress-spinner> -->
+      <!-- <mat-spinner></mat-spinner> -->
+      <mat-progress-spinner *ngIf="dataSource.isLoadingResults" mode="indeterminate" diameter="70"></mat-progress-spinner>
+    </div>
+    <mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef class="actions-width">
+          <!-- {{l('Actions')}} -->
+          <button color="primary" mat-icon-button>
+            <mat-icon>face</mat-icon>
+          </button>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row" class="actions-width">
+          <button color="accent" mat-icon-button [matMenuTriggerFor]="editMenu">
+            <mat-icon>settings</mat-icon>
+          </button>
+          <mat-menu #editMenu="matMenu">
+            <button mat-menu-item (click)="openEditDialog(row.id)">{{l('Edit')}}</button>
+          </mat-menu>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="tenancyName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> {{l('TenancyCodeName')}} </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.tenancyName}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>{{l('Name')}} </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="editionDisplayName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> {{l('Edition')}} </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.editionDisplayName}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="subscriptionEndDateUtc">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> {{l('SubscriptionEndDateUtc')}} </mat-header-cell>
+        <mat-cell *matCellDef="let row" [style.color]="row.subscriptionEndDateUtc">
+          {{ row.subscriptionEndDateUtc ? (row.subscriptionEndDateUtc | momentFormat:'L') : '-'}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="isActive">
+        <mat-header-cell *matHeaderCellDef mat-sort-header class="custom-cell-width"> {{l('Active')}} </mat-header-cell>
+        <mat-cell *matCellDef="let row" class="custom-cell-width" [style.color]="row.isActive">
+          <mat-chip-list>
+            <mat-chip *ngIf="row.isActive" color="primary" selected="true">{{l('Yes')}}</mat-chip>
+            <mat-chip *ngIf="!row.isActive" color="warn" selected="true">{{l('No')}}</mat-chip>
+          </mat-chip-list>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="creationTime">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>{{l('CreationTime')}}</mat-header-cell>
+        <mat-cell *matCellDef="let row" [style.color]="row.creationTime">
+          {{row.creationTime | momentFormat:'L'}}
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator #paginator [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+    </mat-paginator>
+  </div>
+</mat-card>
+<div>{{filters | json}}</div>

@@ -1,0 +1,37 @@
+<mat-progress-bar [mode]="loading? 'indeterminate':'Determinate'" class="dialog-progress-bar" color="Primary">
+</mat-progress-bar>
+<span mat-dialog-title style="text-align:center">
+  {{l("EditText")}}
+</span>
+<mat-dialog-content class="dialog-content">
+  <div class="key-container">
+    <label>{{l("Key")}}:</label>
+    <strong>{{model.key}}</strong>
+  </div>
+  <hr class="hr-class">
+  <div class="baseL-container">
+    <label>
+      {{l('BaseLanguage')}}:
+      <span class="{{baseLanguage.icon}}"></span> {{baseLanguage.displayName}}
+    </label>
+    <mat-form-field class="form-field full-width">
+      <!-- <textarea matInput placeholder="" matTextareaAutosize matAutosizeMinRows="3" matAutosizeMaxRows="5"> -->
+      <textarea readonly [ngModel]="baseText" matInput matTextareaAutosize>
+      </textarea>
+    </mat-form-field>
+  </div>
+  <div class="targetL-container">
+    <label>
+      {{l('TargetLanguage')}}:
+      <span class="{{targetLanguage.icon}}"></span> {{targetLanguage.displayName}}
+    </label>
+    <mat-form-field class="form-field full-width">
+      <textarea matInput [(ngModel)]="model.value" matTextareaAutosize>
+      </textarea>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+  <button mat-raised-button [disabled]="loading" color="accent" mat-dialog-close>{{l('Cancel')}}</button>
+  <button mat-raised-button [disabled]="loading" color="accent" (click)="save()">{{l('Save')}}</button>
+</mat-dialog-actions>

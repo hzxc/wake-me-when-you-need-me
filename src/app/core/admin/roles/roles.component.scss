@@ -1,0 +1,65 @@
+// .roles-card {
+//   margin: 10px;
+// }
+
+
+/* card header css*/
+
+.icon-card-header {
+  font-size: 40px;
+}
+
+.mat-card-title {
+  margin-bottom: 5px !important;
+}
+
+.mat-card-subtitle {
+  margin-bottom: 0px !important;
+}
+
+
+/* progress spinner*/
+
+// .table-container {
+//   position: relative;
+// }
+
+// .loading-shade {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   bottom: 0;
+//   right: 0;
+//   background: rgba(0, 0, 0, 0.2); // background: rgba(0, 0, 0, .6);
+//   z-index: 1;
+//   display: flex;
+//   align-items: start;
+//   justify-content: center;
+// }
+
+.create-role-button {
+  position: absolute;
+  top: 10px;
+  right: 24px;
+  z-index: 1;
+}
+
+
+/* mat-table css*/
+
+// .custom-cell-width {
+//   flex-grow: 0.3;
+// }
+
+
+
+/* mat-chip */
+
+.mat-chip {
+  font-size: 7px;
+  line-height: 9px;
+}
+
+.mat-chip:not(.mat-basic-chip)+.mat-chip:not(.mat-basic-chip) {
+  margin: 0;
+}

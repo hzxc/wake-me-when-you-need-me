@@ -1,0 +1,105 @@
+<mat-card>
+  <mat-card-header>
+    <div mat-card-avatar>
+      <mat-icon class="icon-card-header">text_format</mat-icon>
+    </div>
+    <mat-card-title>{{l("LanguageTexts")}}</mat-card-title>
+    <mat-card-subtitle>{{l("LanguageTextsHeaderInfo")}}</mat-card-subtitle>
+  </mat-card-header>
+  <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutWrap>
+    <mat-form-field class="form-field full-width">
+      <input matInput [(ngModel)]="filters.filterText" placeholder="{{l('SearchWithThreeDot')}}">
+      <button mat-raised-button color="accent" matSuffix (click)="search()">
+        <mat-icon>search</mat-icon>/
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <mat-form-field class="form-field" fxFlex="24" fxFlex.xs="100" fxFlex.sm="49">
+      <mat-select #baseLanguageSelect="matSelect" placeholder="{{l('BaseLanguage')}}" [(ngModel)]="currentLanguage" (change)="baseLanguageChange($event.value)">
+        <mat-select-trigger>{{ baseLanguageSelect.selected?.value.displayName}}</mat-select-trigger>
+        <mat-option *ngFor="let language of languages" [value]="language">
+          <span [class]="language.icon"></span>
+          {{ language.displayName }}
+        </mat-option>
+      </mat-select>
+      <span matPrefix [class]="baseLanguageSelect.selected?.value.icon"></span>
+    </mat-form-field>
+
+    <mat-form-field class="form-field" fxFlex="24" fxFlex.xs="100" fxFlex.sm="49">
+      <mat-select #targetLanguageSelect="matSelect" placeholder="{{l('TargetLanguage')}}" [(ngModel)]="targetLanguage" (ngModelChange)="targetLanguageChange($event)">
+        <mat-select-trigger>{{ targetLanguageSelect.selected?.value.displayName}}</mat-select-trigger>
+        <mat-option *ngFor="let language of languages" [value]="language">
+          <span [class]="language.icon"></span>
+          {{ language.displayName }}
+        </mat-option>
+      </mat-select>
+      <span matPrefix [class]="targetLanguageSelect.selected?.value.icon"></span>
+    </mat-form-field>
+
+    <mat-form-field class="form-field" fxFlex="24" fxFlex.xs="100" fxFlex.sm="49">
+      <mat-select #sourceSelect="matSelect" placeholder="{{l('Source')}}" [(ngModel)]="filters.sourceName">
+        <mat-option *ngFor="let sourceName of sourceNames" [value]="sourceName">
+          {{ sourceName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="form-field" fxFlex="24" fxFlex.xs="100" fxFlex.sm="49">
+      <mat-select placeholder="{{l('TargetValue')}}" [(ngModel)]="filters.targetValueFilter">
+        <mat-option value="ALL">{{l("All")}}</mat-option>
+        <mat-option value="EMPTY">{{l("EmptyOnes")}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </div>
+  <div class="table-container">
+    <hr class="hr-class">
+    <div class="loading-shade" *ngIf="dataSource.isLoadingResults">
+      <mat-progress-spinner *ngIf="dataSource.isLoadingResults" mode="indeterminate" diameter="70"></mat-progress-spinner>
+    </div>
+    <mat-table #table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef class="actions-width">
+          <!-- {{l('Actions')}} -->
+          <button color="primary" mat-icon-button>
+            <mat-icon>face</mat-icon>
+          </button>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row" class="actions-width">
+          <button color="accent" mat-icon-button [matMenuTriggerFor]="editMenu">
+            <mat-icon>settings</mat-icon>
+            <!-- {{l('Actions')}} -->
+            <!-- <mat-icon>keyboard_arrow_down</mat-icon> -->
+          </button>
+          <mat-menu #editMenu="matMenu">
+            <button mat-menu-item (click)="openEditDialog(row)">{{l('Edit')}}</button>
+          </mat-menu>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="key">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>{{l('Key')}}</mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          {{truncateString(row.key)}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="baseValue">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>{{l('BaseValue')}}</mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          {{truncateString(row.baseValue)}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="targetValue">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>{{l('TargetValue')}}</mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          {{truncateString(row.targetValue) }}
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator #paginator [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100,1000]">
+    </mat-paginator>
+  </div>
+</mat-card>

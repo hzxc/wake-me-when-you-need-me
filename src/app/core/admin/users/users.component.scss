@@ -1,0 +1,66 @@
+// .users-card {
+//   margin: 10px;
+// }
+
+
+/* card header css*/
+
+.icon-card-header {
+  font-size: 40px;
+}
+
+.mat-card-title {
+  margin-bottom: 5px !important;
+}
+
+.mat-card-subtitle {
+  margin-bottom: 0px !important;
+}
+
+
+/*table loading-shade*/
+
+// .table-container {
+//   position: relative;
+// }
+
+// .loading-shade {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   bottom: 0;
+//   right: 0;
+//   background: rgba(0, 0, 0, 0.2);
+//    // background: rgba(0, 0, 0, .6);
+//   z-index: 1;
+//   display: flex;
+//   align-items: start;
+//   justify-content: center;
+// }
+
+// .custom-cell-width {
+//   flex: 0 0 auto !important;
+//   width: 45px !important;
+//   padding: 2px;
+// }
+
+
+/* mat-table css*/
+
+// .custom-cell-style {
+// flex: 0.05;
+//   padding-left:7px;
+// }
+.create-user-button {
+  position: absolute;
+  top: 10px;
+  right: 24px;
+  z-index: 1;
+}
+
+.export-to-excel-button {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  // z-index: 1;
+}

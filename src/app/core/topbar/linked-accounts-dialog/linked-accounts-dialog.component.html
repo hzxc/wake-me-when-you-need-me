@@ -1,0 +1,58 @@
+<mat-progress-bar [mode]="loading? 'indeterminate':'Determinate'" class="dialog-progress-bar" color="Primary">
+</mat-progress-bar>
+<div class="linked-accounts-dialog-header" fxLayoutAlign="space-between center" mat-dialog-title>
+  <span style="font-weight:bold;">
+    {{l("LinkedAccounts")}}:
+  </span>
+  <button mat-raised-button color="primary" (click)="openLinkAccountsDialog()">
+    <mat-icon>add</mat-icon>
+    {{l("LinkNewAccount")}}
+  </button>
+</div>
+<mat-dialog-content class="dialog-content">
+  <div class="table-container">
+    <div class="loading-shade" *ngIf="dataSource.isLoadingResults">
+      <mat-progress-spinner mode="indeterminate" diameter="70"></mat-progress-spinner>
+    </div>
+    <mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef class="linked-account-actions-width">
+          <button color="primary" mat-icon-button>
+            <mat-icon>all_inclusive</mat-icon>
+          </button>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row" class="linked-account-actions-width">
+          <button color="primary" mat-button class="linked-account-action-button">
+            <mat-icon>input</mat-icon>
+            {{l('LogIn')}}
+          </button>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="username">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> {{l('UserName')}} </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{getShownLinkedUserName(row)}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="delete-actions">
+        <mat-header-cell *matHeaderCellDef class="linked-account-actions-width">
+          <button color="warn" mat-icon-button>
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row" class="linked-account-actions-width">
+          <button color="warn" (click)="deleteLinkedUser(row)" mat-button class="linked-account-action-button">
+            <mat-icon>delete</mat-icon>
+            {{l('Delete')}}
+          </button>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator #paginator [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]">
+    </mat-paginator>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+  <button mat-raised-button [disabled]="loading" color="accent" [mat-dialog-close]="true">{{l('Close')}}</button>
+  <!-- <button mat-raised-button [disabled]="loading" color="accent" (click)="save()">{{l('Save')}}</button> -->
+</mat-dialog-actions>

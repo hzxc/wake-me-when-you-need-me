@@ -1,0 +1,38 @@
+<mat-progress-bar [mode]="loading? 'indeterminate':'Determinate'" class="dialog-progress-bar" color="Primary">
+</mat-progress-bar>
+<span mat-dialog-title style="text-align:center">
+  {{l("NotificationSettings")}}
+</span>
+<mat-dialog-content class="dialog-content">
+  <span style="font-weight:bold;font-size:1rem;">{{l("ReceiveNotifications")}}:</span>
+  <mat-list class="notification-list">
+    <mat-list-item>
+      <mat-slide-toggle labelPosition="before" [(ngModel)]="settings.receiveNotifications">
+        {{settings.receiveNotifications? l("TurnOn"):l("TurnOff")}}
+      </mat-slide-toggle>
+    </mat-list-item>
+    <mat-list-item>
+      {{l("ReceiveNotifications_Definition")}}
+    </mat-list-item>
+    <mat-list-item *ngIf="settings.notifications && !settings.receiveNotifications">
+      <span class="mat-color-warn">
+        <small>{{l("ReceiveNotifications_DisableInfo")}}</small>
+      </span>
+    </mat-list-item>
+  </mat-list>
+  <hr>
+  <div *ngIf="settings.notifications && settings.notifications.length" class="notification-type">
+    <span style="font-weight:bold;font-size:1rem;">{{l("NotificationTypes")}}:</span>
+    <mat-list class="notification-list">
+      <mat-list-item *ngFor="let notification of settings.notifications">
+        <mat-checkbox [(ngModel)]="notification.isSubscribed" [disabled]="!settings.receiveNotifications">
+          {{notification.displayName}}</mat-checkbox>
+        <span *ngIf="notification.description" class="mat-color-accent">{{notification.description}}</span>
+      </mat-list-item>
+    </mat-list>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+  <button mat-raised-button [disabled]="loading" color="accent" mat-dialog-close>{{l('Cancel')}}</button>
+  <button mat-raised-button [disabled]="loading" color="accent" (click)="save()">{{l('Save')}}</button>
+</mat-dialog-actions>

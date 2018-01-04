@@ -1,0 +1,74 @@
+<mat-card>
+  <mat-card-header class="custom-card-header">
+    <div mat-card-avatar>
+      <mat-icon color="primary">notifications</mat-icon>
+    </div>
+    <mat-card-title>{{l("Notifications")}}</mat-card-title>
+    <mat-card-subtitle>{{l("NotificationsHeaderInfo")}}</mat-card-subtitle>
+  </mat-card-header>
+
+  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutWrap>
+    <mat-form-field class="form-field">
+      <mat-select placeholder="filter" [(ngModel)]="dataSource.readStateFilter">
+        <mat-option value="ALL">{{l("All")}}</mat-option>
+        <mat-option value="UNREAD">{{l("Unread")}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-button color="primary" (click)="refresh()">
+      <mat-icon>refresh</mat-icon>
+      {{l("Refresh")}}
+    </button>
+    <button mat-button color="primary" (click)="openNotificationSettingsDialog()">
+      <mat-icon>perm_data_setting</mat-icon>
+      {{l("NotificationSettings")}}
+    </button>
+    <button mat-button color="primary" (click)="setAllNotificationsAsRead()">
+      <mat-icon>select_all</mat-icon>
+      {{l("SetAllAsRead")}}
+    </button>
+  </div>
+  <div class="table-container">
+    <hr class="hr-class">
+    <div class="loading-shade" *ngIf="dataSource.isLoadingResults">
+      <mat-progress-spinner *ngIf="dataSource.isLoadingResults" mode="indeterminate" diameter="70"></mat-progress-spinner>
+    </div>
+    <mat-table #table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef class="actions-width">
+          <button color="primary" mat-icon-button>
+            <mat-icon>face</mat-icon>
+          </button>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row" class="actions-width">
+          <button mat-icon-button>
+            <mat-icon (click)="setAsRead(row)" matTooltip="{{l('SetAsRead')}}" color="accent" *ngIf="row.formattedNotification.isUnread">remove_circle</mat-icon>
+            <mat-icon color="primary" *ngIf="!row.formattedNotification.isUnread">check_circle</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="text">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>{{l('Notification')}} </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <mat-chip-list class="notification-read">
+            <mat-chip *ngIf="!row.formattedNotification.isUnread" class="little-chip" color="primary" selected="true">{{l("Read")}}</mat-chip>
+            <mat-chip *ngIf="row.formattedNotification.isUnread" class="little-chip" color="accent" selected="true">{{l("Unread")}}</mat-chip>
+          </mat-chip-list>
+          <a *ngIf="row.formattedNotification.url" href="{{row.formattedNotification.url}}">{{truncateString(row.formattedNotification.text, 120)}}</a>
+          <span *ngIf="!row.formattedNotification.url" title="{{row.formattedNotification.text}}">{{truncateString(row.formattedNotification.text, 120)}}</span>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="creationTime">
+        <mat-header-cell *matHeaderCellDef mat-sort-header class="custom-cell-width">{{l('CreationTime')}} </mat-header-cell>
+        <mat-cell *matCellDef="let row" class="custom-cell-width">
+          <span title="{{row.notification.creationTime | momentFormat:'llll'}}">
+            {{fromNow(row.notification.creationTime)}}
+          </span>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator #paginator [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]">
+    </mat-paginator>
+  </div>
+</mat-card>

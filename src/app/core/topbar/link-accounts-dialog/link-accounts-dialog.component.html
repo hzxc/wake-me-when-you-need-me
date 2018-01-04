@@ -1,0 +1,28 @@
+<mat-progress-bar [mode]="loading? 'indeterminate':'Determinate'" class="dialog-progress-bar" color="Primary">
+</mat-progress-bar>
+<span mat-dialog-title style="text-align:center">
+  {{l("LinkNewAccount")}}
+</span>
+<mat-dialog-content class="dialog-content">
+  <form id="ngForm" #linkAccountForm="ngForm" class="form-container" novalidate (ngSubmit)="save(linkAccountForm)">
+    <mat-form-field class="full-width form-field">
+      <input matInput ngModel name="tenancyName" placeholder="{{l('TenancyName')}}">
+    </mat-form-field>
+    <mat-form-field class="full-width form-field">
+      <input required ngModel matInput name="usernameOrEmailAddress" placeholder="{{l('UserName')}}">
+      <mat-error *ngIf="linkAccountForm.form.hasError('required','usernameOrEmailAddress')">
+        {{l("Required")}}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="full-width form-field">
+      <input required ngModel type="password" name="password" matInput placeholder="{{l('Password')}}">
+      <mat-error *ngIf="linkAccountForm.form.hasError('required','usernameOrEmailAddress')">
+        {{l("Required")}}
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+  <button mat-raised-button [disabled]="loading" color="accent" mat-dialog-close>{{l('Cancel')}}</button>
+  <button type="submit" mat-raised-button [disabled]="loading" color="accent" form="ngForm">{{l('Save')}}</button>
+</mat-dialog-actions>

@@ -1,0 +1,117 @@
+<!-- <div class="example-container mat-elevation-z8"> -->
+<mat-card>
+  <mat-card-header>
+    <div mat-card-avatar>
+      <mat-icon class="icon-card-header">supervisor_account</mat-icon>
+    </div>
+    <mat-card-title>{{l("Users")}}</mat-card-title>
+    <mat-card-subtitle>{{l("UsersHeaderInfo")}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-tab-group>
+    <mat-tab label="UserList">
+      <form #usersForm novalidate fxLayout="row" fxLayoutAlign="space-between center" fxLayoutWrap>
+        <mat-form-field class="full-width form-field">
+          <input matInput [(ngModel)]="filters.filterText" name="filterText" placeholder="{{l('SearchWithThreeDot')}}">
+          <button mat-raised-button color="accent" matSuffix>
+            <mat-icon>search</mat-icon>/
+            <mat-icon>refresh</mat-icon>
+          </button>
+        </mat-form-field>
+        <div *ngIf="checked" fxFlex="49" fxFlex.lt-sm="100">
+          <app-permission-combo (selectedPermissionNameChange)="selectedPermissionNameChange($event)"></app-permission-combo>
+        </div>
+        <div *ngIf="checked" fxFlex="49" fxFlex.lt-sm="100">
+          <app-role-combo (selectedRoleIdChange)="selectedRoleIdChange($event)"></app-role-combo>
+        </div>
+      </form>
+      <mat-slide-toggle [(ngModel)]="checked" (ngModelChange)="advancedFiltersChange($event)">
+        {{checked?l("HideAdvancedFilters"):l("ShowAdvancedFilters")}}
+      </mat-slide-toggle>
+
+      <div class="table-container">
+        <hr class="hr-class">
+        <div class="loading-shade" *ngIf="dataSource.isLoadingResults">
+          <!-- <mat-spinner></mat-spinner> -->
+          <mat-progress-spinner *ngIf="dataSource.isLoadingResults" mode="indeterminate" diameter="70"></mat-progress-spinner>
+        </div>
+        <button class="export-to-excel-button" mat-mini-fab color="primary" (click)="exportToExcel()">
+          <mat-icon>explicit</mat-icon>
+        </button>
+        <mat-table #table [dataSource]="dataSource" matSort>
+          <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef class="actions-width">
+              <!-- {{l('Actions')}} -->
+              <button color="primary" mat-icon-button>
+                <mat-icon>face</mat-icon>
+              </button>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" class="actions-width">
+              <button color="accent" mat-icon-button [matMenuTriggerFor]="editMenu">
+                <mat-icon>settings</mat-icon>
+              </button>
+              <mat-menu #editMenu="matMenu">
+                <button *ngIf="row.id !== appSession.userId" mat-menu-item (click)="_impersonationService.impersonate(row.id, appSession.tenantId)">
+                  {{l('LoginAsThisUser')}}
+                </button>
+                <button mat-menu-item (click)="openEditTabs(row)">{{l('Edit')}}</button>
+                <button mat-menu-item (click)="openPermissionsTab(row)">{{l('Permissions')}}</button>
+                <button mat-menu-item (click)="unlockUser(row)">{{l('Unlock')}}</button>
+                <button mat-menu-item (click)="deleteUser(row)">{{l('Delete')}}</button>
+              </mat-menu>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="userName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{l('UserName')}} </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.userName}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{l('Name')}} </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="surname">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{l('Surname')}} </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.surname}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="roles">
+            <mat-header-cell *matHeaderCellDef> {{l('Roles')}} </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{getRolesAsString(row.roles)}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="emailAddress">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{l('EmailAddress')}} </mat-header-cell>
+            <mat-cell *matCellDef="let row" matTooltip="{{row.emailAddress}}"> {{row.emailAddress}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="isEmailConfirmed">
+            <mat-header-cell *matHeaderCellDef class="custom-cell-width"> {{l('EmailConfirm')}} </mat-header-cell>
+            <mat-cell *matCellDef="let row" class="custom-cell-width"> {{row.isEmailConfirmed}}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="isActive">
+            <mat-header-cell *matHeaderCellDef class="custom-cell-width"> {{l('Active')}} </mat-header-cell>
+            <mat-cell *matCellDef="let row" class="custom-cell-width"> {{row.isActive}}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="lastLoginTime">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{l('LastLoginTime')}} </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.lastLoginTime | momentFormat:'L'}}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="creationTime">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{l('CreationTime')}}</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.creationTime | momentFormat:'L'}}</mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+        <mat-paginator #paginator [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]">
+        </mat-paginator>
+      </div>
+    </mat-tab>
+    <mat-tab *ngIf="ecTab" label="{{userId? l('EditUser') +':'+ currentEditUserName: l('CreateNewUser')}}">
+      <app-create-or-edit-user-tab (saveState)="saveStateChange($event)" [userId]="userId"></app-create-or-edit-user-tab>
+    </mat-tab>
+    <mat-tab *ngIf="permissionTab" label="{{userId? l('Permissions') +':'+ currentEditUserName: l('Permissions')}}">
+      <app-edit-user-permissions-tab (permissionSaveState)="permissionSaveStateChange($event)" [userId]="userId">
+      </app-edit-user-permissions-tab>
+    </mat-tab>
+  </mat-tab-group>
+  <button class="create-user-button" mat-fab color="primary" (click)="createUser()">
+    <mat-icon>exposure_plus_1</mat-icon>
+  </button>
+</mat-card>

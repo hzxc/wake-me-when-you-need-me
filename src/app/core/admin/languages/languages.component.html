@@ -1,0 +1,65 @@
+<mat-card>
+  <mat-card-header>
+    <div mat-card-avatar>
+      <mat-icon class="icon-card-header">language</mat-icon>
+    </div>
+    <mat-card-title>{{l("Languages")}}</mat-card-title>
+    <mat-card-subtitle>{{l("LanguagesHeaderInfo")}}</mat-card-subtitle>
+  </mat-card-header>
+  <div class="table-container">
+    <hr class="hr-class">
+    <div class="loading-shade" *ngIf="dataSource.isLoadingResults">
+      <!-- <mat-spinner></mat-spinner> -->
+      <mat-progress-spinner mode="indeterminate" diameter="70"></mat-progress-spinner>
+    </div>
+    <mat-table #table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef class="actions-width">
+          <!-- {{l('Actions')}} -->
+          <button color="primary" mat-icon-button>
+            <mat-icon>face</mat-icon>
+          </button>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row" class="actions-width">
+          <button color="accent" mat-icon-button [matMenuTriggerFor]="editMenu">
+            <mat-icon>settings</mat-icon>
+            <!-- {{l('Actions')}} -->
+            <!-- <mat-icon>keyboard_arrow_down</mat-icon> -->
+          </button>
+          <mat-menu #editMenu="matMenu">
+            <button mat-menu-item (click)="changeTexts(row)">{{l('ChangeTexts')}}</button>
+            <button mat-menu-item (click)="setAsDefaultLanguage(row)">{{l('SetAsDefaultLanguage')}}</button>
+          </mat-menu>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="displayName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> {{l('Name')}} </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <span [class]="row.icon"></span>
+          <span [ngClass]="{'text-bold' : dataSource.defaultLanguageName === row.name}">{{row.displayName}}</span>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> {{l('Code')}} </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="creationTime">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> {{l('CreationTime')}} </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.creationTime | momentFormat:'L'}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="isDisabled">
+        <mat-header-cell *matHeaderCellDef mat-sort-header class="enabled-button"> {{l('IsEnabled')}} </mat-header-cell>
+        <mat-cell *matCellDef="let row" class="enabled-button">
+          <mat-chip-list>
+            <mat-chip *ngIf="!row.isDisabled" color="primary" selected="true">{{l('Yes')}}</mat-chip>
+            <mat-chip *ngIf="row.isDisabled" color="warn" selected="true"> {{l('No')}}</mat-chip>
+          </mat-chip-list>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator #paginator [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]">
+    </mat-paginator>
+  </div>
+</mat-card>

@@ -1,0 +1,11 @@
+<mat-form-field class="full-width form-field">
+  <input #filterInput placeholder="{{l('FilterByPermission')}}"
+  aria-label="filterByPermission"
+  matInput [matAutocomplete]="permissionAuto"
+  [formControl]="permissionControl">
+  <mat-autocomplete #permissionAuto="matAutocomplete" [displayWith]="displayFn">
+    <mat-option *ngFor="let permission of filterPermissions" [value]="permission">
+      {{permission.displayName}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

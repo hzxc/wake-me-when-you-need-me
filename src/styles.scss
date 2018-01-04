@@ -1,0 +1,56 @@
+/* You can add global styles to this file, and also import other style files */
+@import './assets/styles/fonts.css';
+@import './assets/styles/globals.css';
+@import './assets/styles/themes.scss';
+@import './assets/styles/common.css';
+@import './assets/styles/main-sidenav.css';
+@import './assets/styles/top-bar.css';
+@import './assets/styles/collapsed-sidenav.css';
+
+/*---- Loader ----*/
+.app-loader {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  margin: auto;
+}
+
+.double-bounce1, .double-bounce2 {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  opacity: 0.6;
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+  animation: sk-bounce 2.0s infinite ease-in-out;
+}
+.double-bounce2 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+@-webkit-keyframes sk-bounce {
+  0%, 100% { -webkit-transform: scale(0.0) }
+  50% { -webkit-transform: scale(1.0) }
+}
+@keyframes sk-bounce {
+  0%, 100% {
+      transform: scale(0.0);
+      -webkit-transform: scale(0.0);
+  }
+  50% {
+      transform: scale(1.0);
+      -webkit-transform: scale(1.0);
+  }
+}

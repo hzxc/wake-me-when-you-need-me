@@ -1,0 +1,12 @@
+<div class="page-wrap mat-bg-primary">
+  <div class="form-hold">
+      <mat-progress-bar [mode]="submitting?'indeterminate':'determinate'" class="progress"></mat-progress-bar>
+      <mat-card>
+          <mat-card-content>
+              <router-outlet></router-outlet>
+          </mat-card-content>
+      </mat-card>
+      <app-account-languages></app-account-languages>
+  </div>
+</div>
+<app-shared-theme-switcher class="fab-button"></app-shared-theme-switcher>

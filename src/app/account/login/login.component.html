@@ -1,0 +1,22 @@
+<div class="text-center">
+  <img src="assets/images/logo/logo-full.png" alt="" class="mb-05">
+  <h3>{{l("LogIn")}}</h3>
+</div>
+<form novalidate [formGroup]="loginModel" (ngSubmit)="login()">
+  <mat-form-field class="full-width form-field">
+    <mat-icon matPrefix>person</mat-icon>
+    <input required matInput formControlName="userNameOrEmailAddress" [(ngModel)]="loginService.authenticateModel.userNameOrEmailAddress"
+      placeholder="{{l('UserNameOrEmail')}}">
+    <mat-error>{{userNameOrEmailAddressErrorMessage()}}</mat-error>
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-icon matPrefix>lock</mat-icon>
+    <input type="password" required matInput formControlName="password" [(ngModel)]="loginService.authenticateModel.password"
+      placeholder="{{l('Password')}}">
+    <mat-error>{{passwordErrorMessage()}}</mat-error>
+  </mat-form-field>
+  <section class="section-container">
+    <mat-checkbox formControlName="rememberClient" [(ngModel)]="loginService.rememberMe">{{l("RememberMe")}}</mat-checkbox>
+    <button type="submit" mat-raised-button class="mat-primary mb-1">{{l("LogIn")}}</button>
+  </section>
+</form>

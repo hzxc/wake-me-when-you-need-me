@@ -1,0 +1,335 @@
+@import '~@angular/material/theming';
+@include mat-core();
+//indigo
+$indigo-light-primary:mat-palette($mat-indigo);
+$indigo-light-accent:mat-palette($mat-pink, A200, A100, A400);
+$indigo-light-warn:mat-palette($mat-red);
+$indigo-light-theme:mat-light-theme($indigo-light-primary, $indigo-light-accent, $indigo-light-warn);
+@include angular-material-theme($indigo-light-theme);
+.indigo-light-theme {
+  .mat-bg-primary {
+    background: map-get($mat-indigo, 500) !important;
+    color: #ffffff !important;
+  }
+  .mat-bg-accent {
+    background-color: map-get($mat-pink, 500);
+    color: black;
+  }
+  .mat-color-primary,
+  .list-item-active,
+  .sidebar-panel.mat-sidenav .sidebar-list-item.open>.mat-list-item-content>a>mat-icon:not(.menu-caret),
+  .sidebar-panel.mat-sidenav .sidebar-list-item.open>.mat-list-item-content>a>span,
+  .sidebar-panel.mat-sidenav .sidebar-list-item.open .sub-menu .mat-list-item.selected a {
+    color: map-get($mat-indigo, 500) !important;
+  }
+  .mat-color-accent {
+    color: map-get($indigo-light-accent, 500) !important;
+  }
+  .mat-color-warn {
+    color: map-get($indigo-light-warn, 500) !important;
+  }
+  .sidebar-panel.mat-sidenav .sidebar-list-item.open>.mat-list-item-content>.sub-menu,
+  .sidebar-panel.mat-sidenav .sidebar-list-item.open>.mat-list-item-content>a>mat-icon:not(.menu-caret),
+  .list-item-active {
+    border-color: map-get($mat-indigo, 500);
+  }
+  /*---- datepicker-readonly -----*/
+  .datepicker-item-readonly.mat-form-field .mat-form-field-underline {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, .42) 0, rgba(0, 0, 0, .42) 33%, transparent 0);
+    background-size: 4px 1px;
+    background-repeat: repeat-x;
+  }
+  .datepicker-item-readonly.mat-form-field .mat-form-field-underline {
+    background-position: 0;
+    background-color: transparent;
+  }
+  .datepicker-item-readonly.mat-form-field .mat-input-element {
+    color: rgba(0, 0, 0, .42); // color: rgba(255,255,255,.7);
+  }
+  /*---- hr-class -----*/
+  .hr-class {
+    border-top-style: solid;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-left-style: solid;
+    border-top-color: map-get($indigo-light-accent, 500);
+    border-right-color: map-get($indigo-light-accent, 500);
+    border-bottom-color: map-get($indigo-light-accent, 500);
+    border-left-color: map-get($indigo-light-accent, 500);
+    background-color: map-get($indigo-light-accent, 500);
+  }
+  /*js-tree-custom-style*/
+  .jstree-hovered {
+    background-color: map-get($indigo-light-accent, 500) !important;
+  }
+}
+
+// @include angular-material-theme($indigo-light-theme);
+//deeppurple
+$deeppurple-light-primary:mat-palette($mat-deep-purple);
+$deeppurple-light-accent:mat-palette($mat-amber, A200, A100, A400);
+$deeppurple-light-warn:mat-palette($mat-red);
+$deeppurple-light-theme:mat-light-theme($deeppurple-light-primary, $deeppurple-light-accent, $deeppurple-light-warn);
+.deeppurple-light-theme {
+  @include angular-material-theme($deeppurple-light-theme);
+  .mat-bg-primary {
+    background: map-get($mat-deep-purple, 500) !important;
+    color: #ffffff !important;
+  }
+  .mat-bg-accent {
+    background-color: map-get($mat-amber, 500);
+    color: black;
+  }
+  .mat-color-primary,
+  .list-item-active,
+  .sidebar-panel.mat-sidenav .sidebar-list-item.open>.mat-list-item-content>a>mat-icon:not(.menu-caret),
+  .sidebar-panel.mat-sidenav .sidebar-list-item.open>.mat-list-item-content>a>span,
+  .sidebar-panel.mat-sidenav .sidebar-list-item.open .sub-menu .mat-list-item.selected a {
+    color: map-get($mat-deep-purple, 500) !important;
+  }
+  .mat-color-accent {
+    color: map-get($deeppurple-light-accent, 500) !important;
+  }
+  .mat-color-warn {
+    color: map-get($deeppurple-light-warn, 500) !important;
+  }
+  .sidebar-panel.mat-sidenav .sidebar-list-item.open>.mat-list-item-content>.sub-menu,
+  .sidebar-panel.mat-sidenav .sidebar-list-item.open>.mat-list-item-content>a>mat-icon:not(.menu-caret),
+  .list-item-active {
+    border-color: map-get($mat-deep-purple, 500);
+  }
+  .mat-mini-fab.mat-accent {
+    color: #fff !important
+  }
+  /*---- datepicker-readonly -----*/
+  .datepicker-item-readonly.mat-form-field .mat-form-field-underline {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, .42) 0, rgba(0, 0, 0, .42) 33%, transparent 0);
+    background-size: 4px 1px;
+    background-repeat: repeat-x;
+  }
+  .datepicker-item-readonly.mat-form-field .mat-form-field-underline {
+    background-position: 0;
+    background-color: transparent;
+  }
+  .datepicker-item-readonly.mat-form-field .mat-input-element {
+    color: rgba(0, 0, 0, .42); // color: rgba(255,255,255,.7);
+  }
+  /*---- hr-class -----*/
+  .hr-class {
+    border-top-style: solid;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-left-style: solid;
+    border-top-color: map-get($deeppurple-light-accent, 500);
+    border-right-color: map-get($deeppurple-light-accent, 500);
+    border-bottom-color: map-get($deeppurple-light-accent, 500);
+    border-left-color: map-get($deeppurple-light-accent, 500);
+    background-color: map-get($deeppurple-light-accent, 500);
+  }
+  /*js-tree-custom-style*/
+  .jstree-hovered {
+    background-color: map-get($deeppurple-light-accent, 500) !important;
+  }
+}
+
+//purple
+$purple-dark-primary:mat-palette($mat-purple);
+$purple-dark-accent:mat-palette($mat-green, A200, A100, A400);
+$purple-dark-warn:mat-palette($mat-red);
+$purple-dark-theme:mat-dark-theme($purple-dark-primary, $purple-dark-accent, $purple-dark-warn);
+.purple-dark-theme {
+  @include angular-material-theme($purple-dark-theme);
+  .mat-bg-primary {
+    background: map-get($mat-purple, 500) !important;
+    color: #ffffff !important;
+  }
+  .mat-bg-accent {
+    background-color: map-get($mat-green, 500);
+    color: black;
+  }
+  .mat-color-primary,
+  .list-item-active,
+  .sidebar-panel.mat-sidenav .sidebar-list-item.open>.mat-list-item-content>a>mat-icon:not(.menu-caret),
+  .sidebar-panel.mat-sidenav .sidebar-list-item.open>.mat-list-item-content>a>span,
+  .sidebar-panel.mat-sidenav .sidebar-list-item.open .sub-menu .mat-list-item.selected a {
+    color: map-get($mat-purple, 500) !important;
+  }
+  .mat-color-accent {
+    color: map-get($purple-dark-accent, 500) !important;
+  }
+  .mat-color-warn {
+    color: map-get($purple-dark-warn, 500) !important;
+  }
+  .sidebar-panel.mat-sidenav .sidebar-list-item.open>.mat-list-item-content>.sub-menu,
+  .sidebar-panel.mat-sidenav .sidebar-list-item.open>.mat-list-item-content>a>mat-icon:not(.menu-caret),
+  .list-item-active {
+    border-color: map-get($mat-purple, 500);
+  }
+  &.collapsed-menu .sidebar-panel .sidebar-list-item.open .sub-menu {
+    background: rgba(66, 66, 66, 0.92)!important;
+  }
+  /*---- datepicker-readonly -----*/
+  .datepicker-item-readonly.mat-form-field .mat-form-field-underline {
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.7) 33%, transparent 0%);
+    background-size: 4px 1px;
+    background-repeat: repeat-x;
+  }
+  .datepicker-item-readonly.mat-form-field .mat-form-field-underline {
+    background-position: 0;
+    background-color: transparent;
+  }
+  .datepicker-item-readonly.mat-form-field .mat-input-element {
+    // color: rgba(0,0,0,.42);
+    color: rgba(255, 255, 255, .7);
+  }
+  /*---- hr-class -----*/
+  .hr-class {
+    border-top-style: solid;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-left-style: solid;
+    border-top-color: map-get($purple-dark-accent, 500);
+    border-right-color: map-get($purple-dark-accent, 500);
+    border-bottom-color: map-get($purple-dark-accent, 500);
+    border-left-color: map-get($purple-dark-accent, 500);
+    background-color: map-get($purple-dark-accent, 500);
+  }
+  /*js-tree-custom-style*/
+  .jstree-hovered {
+    background-color: map-get($purple-dark-accent, 500) !important;
+  }
+}
+
+//pink
+$pink-dark-primary:mat-palette($mat-pink);
+$pink-dark-accent:mat-palette($mat-blue-grey, A200, A100, A400);
+$pink-dark-warn:mat-palette($mat-red);
+$pink-dark-theme:mat-dark-theme($pink-dark-primary, $pink-dark-accent, $pink-dark-warn);
+.pink-dark-theme {
+  @include angular-material-theme($pink-dark-theme);
+  .mat-bg-primary {
+    background: map-get($mat-pink, 500) !important;
+    color: #ffffff !important;
+  }
+  .mat-bg-accent {
+    background-color: map-get($mat-blue-grey, 500);
+    color: black;
+  }
+  .mat-color-primary,
+  .list-item-active,
+  .sidebar-panel.mat-sidenav .sidebar-list-item.open>.mat-list-item-content>a>mat-icon:not(.menu-caret),
+  .sidebar-panel.mat-sidenav .sidebar-list-item.open>.mat-list-item-content>a>span,
+  .sidebar-panel.mat-sidenav .sidebar-list-item.open .sub-menu .mat-list-item.selected a {
+    color: map-get($mat-pink, 500) !important;
+  }
+  .mat-color-accent {
+    color: map-get($pink-dark-accent, 500) !important;
+  }
+  .mat-color-warn {
+    color: map-get($pink-dark-warn, 500) !important;
+  }
+  .sidebar-panel.mat-sidenav .sidebar-list-item.open>.mat-list-item-content>.sub-menu,
+  .sidebar-panel.mat-sidenav .sidebar-list-item.open>.mat-list-item-content>a>mat-icon:not(.menu-caret),
+  .list-item-active {
+    border-color: map-get($mat-pink, 500);
+  }
+  &.collapsed-menu .sidebar-panel .sidebar-list-item.open .sub-menu {
+    background: rgba(66, 66, 66, .92)!important;
+  }
+  /*---- datepicker-readonly -----*/
+  .datepicker-item-readonly.mat-form-field .mat-form-field-underline {
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.7) 33%, transparent 0%);
+    background-size: 4px 1px;
+    background-repeat: repeat-x;
+  }
+  .datepicker-item-readonly.mat-form-field .mat-form-field-underline {
+    background-position: 0;
+    background-color: transparent;
+  }
+  .datepicker-item-readonly.mat-form-field .mat-input-element {
+    // color: rgba(0,0,0,.42);
+    color: rgba(255, 255, 255, .7);
+  }
+  /*---- hr-class -----*/
+  .hr-class {
+    border-top-style: solid;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-left-style: solid;
+    border-top-color: map-get($pink-dark-accent, 500);
+    border-right-color: map-get($pink-dark-accent, 500);
+    border-bottom-color: map-get($pink-dark-accent, 500);
+    border-left-color: map-get($pink-dark-accent, 500);
+    background-color: map-get($pink-dark-accent, 500);
+  }
+  /*js-tree-custom-style*/
+  .jstree-hovered {
+    background-color: map-get($pink-dark-accent, 500) !important;
+  }
+}
+
+//custom bule
+// You can define colors here (using http://mcg.mbitson.com)
+$blue-primary: ( 50: #e5eff4, 100: #bdd7e3, 200: #92bdd0, 300: #66a3bd, 400: #458fae, 500: #247ba0, 600: #207398, 700: #1b688e, 800: #165e84, 900: #0d4b73, A100: #a6d8ff, A200: #73c2ff, A400: #40acff, A700: #26a1ff, contrast: ( 50: #000000, 100: #000000, 200: #000000, 300: #000000, 400: #ffffff, 500: #ffffff, 600: #ffffff, 700: #ffffff, 800: #ffffff, 900: #ffffff, A100: #000000, A200: #000000, A400: #000000, A700: #000000, ));
+$blue-accent: ( 50: #fffaef, 100: #fff4d8, 200: #ffecbe, 300: #ffe4a4, 400: #ffdf91, 500: #ffd97d, 600: #ffd575, 700: #ffcf6a, 800: #ffca60, 900: #ffc04d, A100: #ffffff, A200: #ffffff, A400: #fffbf3, A700: #fff1da, contrast: ( 50: #000000, 100: #000000, 200: #000000, 300: #000000, 400: #000000, 500: #000000, 600: #000000, 700: #000000, 800: #000000, 900: #000000, A100: #000000, A200: #000000, A400: #000000, A700: #000000, ));
+$mat-blue-primary: mat-palette($blue-primary);
+$mat-blue-accent: mat-palette($blue-accent);
+$blue-light-theme: mat-light-theme($mat-blue-primary, $mat-blue-accent);
+$blue-primary-dark: darken( map-get($blue-primary, 500), 8%);
+.blue-light-theme {
+  @include angular-material-theme($blue-light-theme);
+  .mat-bg-primary {
+    background: map-get($blue-primary, 500) !important;
+    color: #ffffff !important;
+  }
+  .mat-bg-accent {
+    background-color: map-get($blue-accent, 500);
+    color: black;
+  }
+  .mat-color-primary,
+  .list-item-active,
+  .sidebar-panel.mat-sidenav .sidebar-list-item.open>.mat-list-item-content>a>mat-icon:not(.menu-caret),
+  .sidebar-panel.mat-sidenav .sidebar-list-item.open>.mat-list-item-content>a>span,
+  .sidebar-panel.mat-sidenav .sidebar-list-item.open .sub-menu .mat-list-item.selected a {
+    color: map-get($blue-primary, 500) !important;
+  }
+  .mat-color-accent {
+    color: map-get($blue-accent, 500) !important;
+  }
+  .mat-color-warn {
+    color: #f44336;
+  }
+  .sidebar-panel.mat-sidenav .sidebar-list-item.open>.mat-list-item-content>.sub-menu,
+  .sidebar-panel.mat-sidenav .sidebar-list-item.open>.mat-list-item-content>a>mat-icon:not(.menu-caret),
+  .list-item-active {
+    border-color: map-get($blue-primary, 500);
+  }
+  /*---- datepicker-readonly -----*/
+  .datepicker-item-readonly.mat-form-field .mat-form-field-underline {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, .42) 0, rgba(0, 0, 0, .42) 33%, transparent 0);
+    background-size: 4px 1px;
+    background-repeat: repeat-x;
+  }
+  .datepicker-item-readonly.mat-form-field .mat-form-field-underline {
+    background-position: 0;
+    background-color: transparent;
+  }
+  .datepicker-item-readonly.mat-form-field .mat-input-element {
+    color: rgba(0, 0, 0, .42); // color: rgba(255,255,255,.7);
+  }
+  .hr-class {
+    border-top-style: solid;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-left-style: solid;
+    border-top-color: map-get($blue-accent, 500);
+    border-right-color: map-get($blue-accent, 500);
+    border-bottom-color: map-get($blue-accent, 500);
+    border-left-color: map-get($blue-accent, 500);
+    background-color: map-get($blue-accent, 500);
+  }
+  /*js-tree-custom-style*/
+  .jstree-hovered {
+    background-color: map-get($blue-accent, 500) !important;
+  }
+}

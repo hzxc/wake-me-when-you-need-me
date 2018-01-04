@@ -1,0 +1,12 @@
+<mat-sidenav-container class="app-side-nav-container">
+  <mat-sidenav #sidenav [opened]="!isNavOver()" [mode]="isNavOver() ? 'over' : 'side'" class="sidebar-panel">
+    <app-core-navigation></app-core-navigation>
+  </mat-sidenav>
+  <mat-sidenav #chatBar mode="over" position="end" class="chat-bar">
+    <app-chat-bar></app-chat-bar>
+  </mat-sidenav>
+  <app-core-topbar [sidenav]="sidenav" [chatBar]="chatBar"></app-core-topbar>
+  <div class="rightside-content-hold">
+    <router-outlet></router-outlet>
+  </div>
+</mat-sidenav-container>

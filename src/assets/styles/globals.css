@@ -1,0 +1,175 @@
+html {
+    font-size: 16px;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    min-height: 100%;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-weight: 400;
+    font-size: .875rem;
+    color: rgba(0, 0, 0, .87);
+    line-height: 1.5;
+    font-family: "Roboto", Helvetica Neue, sans-serif;
+}
+
+div {
+    box-sizing: border-box;
+}
+
+
+/*--------- Material ---------*/
+
+mat-list a[mat-list-item] .mat-list-item-content,
+mat-list mat-list-item .mat-list-item-content,
+mat-nav-list a[mat-list-item] .mat-list-item-content,
+mat-nav-list mat-list-item .mat-list-item-content,
+[mat-menu-item],
+.mat-option,
+body .mat-select-trigger {
+    font-size: .875rem !important;
+}
+
+
+/*--------- Material Table row-height ---------*/
+
+.mat-row {
+    min-height: 40px !important;
+}
+
+
+/*--------- mat-tab-label ---------*/
+
+.mat-tab-label {
+    height: 40px !important;
+}
+
+
+/*---- js-tree-icon -----*/
+
+.tree-item-icon-color {
+    color: #dfba49;
+}
+
+
+/*mat-tab-label padding*/
+
+.mat-tab-label {
+    padding: 0px !important;
+}
+
+
+/*select and autocomplete option height*/
+
+.mat-option {
+    height: 40px !important;
+    line-height: 40px !important;
+}
+
+
+/*Menu menu-item height*/
+
+.mat-menu-item {
+    line-height: 40px !important;
+    height: 40px !important;
+}
+
+
+/*table cell fixed*/
+
+.mat-table {
+    table-layout: fixed;
+}
+
+.mat-row .mat-cell {
+    width: 100%;
+    word-break: keep-all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/*mat-select-value*/
+
+
+/* .mat-select.dropdown>.mat-select-trigger>.mat-select-value>.mat-select-value-text { */
+
+
+/* overflow-y: visible; */
+
+
+/* overflow-x: hidden; */
+
+
+/* overflow: visible !important; */
+
+
+/* overflow-x: hidden !important; */
+
+
+/* overflow-y: visible !important; */
+
+
+/* } */
+
+
+/* .mat-select.dropdown>.mat-select-trigger {
+  overflow-x: hidden;
+} */
+
+
+/*table loading-shade*/
+
+.table-container {
+    position: relative;
+}
+
+.loading-shade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+}
+
+/* card header css*/
+
+.custom-card-header .mat-icon {
+  font-size: 40px;
+}
+
+.custom-card-header .mat-card-title {
+  margin-bottom: 5px !important;
+}
+
+.custom-card-header .mat-card-subtitle {
+  margin-bottom: 0px !important;
+}
+
+/*notification read or unread chips*/
+.notification-read .mat-chip-list-wrapper {
+  display: inline-flex !important;
+}
+

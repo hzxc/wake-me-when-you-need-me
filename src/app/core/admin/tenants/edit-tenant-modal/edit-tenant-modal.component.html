@@ -1,0 +1,67 @@
+<mat-progress-bar [mode]="saving? 'indeterminate':'Determinate'" class="dialog-progress-bar" color="Primary">
+</mat-progress-bar>
+<span mat-dialog-title style="text-align:center">
+  {{l("EditTenant")}}: {{tenantEditDto.tenancyName}}
+</span>
+<form [formGroup]="tenantEditGroup" novalidate (ngSubmit)="save()">
+
+  <!-- <hr class="hr-class"> -->
+  <mat-dialog-content class="dialog-content">
+
+    <mat-form-field class="full-width form-field">
+      <input required matInput formControlName="name" placeholder="{{l('Name')}}">
+    </mat-form-field>
+    <div formGroupName="editGroup">
+      <!-- <mat-form-field class="full-width form-field">
+        <mat-select placeholder="Choose" (change)="onEditionChange()" formControlName="editionId" [(ngModel)]="tenantEditDto.editionId"
+          required>
+          <mat-option *ngFor="let edition of editions" [value]="edition.value | convertToInt">
+            {{ edition.displayText }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field> -->
+      <mat-form-field class="full-width form-field">
+        <input formControlName="edition" placeholder="Pick one" aria-label="edition" matInput [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+          <mat-option *ngFor="let edition of filteredEditions" [value]="edition">
+            {{edition.displayText}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <div *ngIf="edtionVisible" fxLayout="row" fxLayoutAlign="start center" fxLayoutWrap>
+        <mat-checkbox formControlName="isUnlimited" (change)="onUnlimitedChange($event.checked)">
+          {{l("UnlimitedTimeSubscription")}}
+        </mat-checkbox>
+        <span fxFill></span>
+        <mat-form-field *ngIf="!editGroup.get('isUnlimited').value" class="full-width form-field">
+          <input matInput [matDatepicker]="subscriptionEndDateUtcPicker" formControlName="subscriptionEndDateUtc" placeholder="Choose a date">
+          <mat-datepicker-toggle matSuffix [for]="subscriptionEndDateUtcPicker"></mat-datepicker-toggle>
+          <mat-datepicker #subscriptionEndDateUtcPicker></mat-datepicker>
+          <!-- <mat-error>{{passwordErrorMessage()}}</mat-error> -->
+        </mat-form-field>
+        <mat-checkbox fxFill formControlName="isInTrialPeriod">
+          {{l("IsInTrialPeriod")}}
+        </mat-checkbox>
+        <mat-chip *ngIf="chipVisible" color="primary" selected="true">
+          {{l("FreeEditionsCannotHaveTrialVersions")}}
+        </mat-chip>
+      </div>
+    </div>
+    <mat-checkbox formControlName="isActive">
+      {{l("Active")}}
+    </mat-checkbox>
+    <mat-error *ngIf="tenantEditGroup.hasError('edit','editGroup')">
+      {{tenantEditGroup.getError('edit','editGroup')?.desc}}
+    </mat-error>
+
+    <!-- <div>{{tenantEditDto | json}}</div>
+    <div>{{tenantEditGroup.value | json}}</div> -->
+  </mat-dialog-content>
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <button mat-raised-button [disabled]="saving" color="accent" mat-dialog-close>{{l('Cancel')}}</button>
+    <button mat-raised-button [disabled]="saving" color="accent">{{l('Save')}}</button>
+    <!-- <mat-progress-spinner diameter="30px" value = "50" mode="Indeterminate"></mat-progress-spinner> -->
+  </mat-dialog-actions>
+</form>
+<!-- <div>{{tenantEditDto.editionId}}</div>
+<div>{{editions | json}}</div> -->

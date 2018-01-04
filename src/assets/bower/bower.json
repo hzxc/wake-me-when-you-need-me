@@ -1,0 +1,20 @@
+{
+  "name": "resources-bower",
+  "authors": [
+    "Juns"
+  ],
+  "description": "lib resources",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "Jcrop": "jcrop#^2.0.4"
+  }
+}

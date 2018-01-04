@@ -1,0 +1,106 @@
+/*---- Common -----*/
+
+.full-width {
+  width: 100% !important;
+}
+
+.form-field .mat-form-field-subscript-wrapper {
+  overflow: visible !important;
+}
+
+
+
+.text-center {
+  text-align: center;
+}
+
+
+/*table css*/
+
+.mat-row,.mat-header-row{
+  padding: 0px !important;
+}
+
+/* .actions-padding {
+  padding-left: 7px;
+} */
+
+
+/*flag-icon*/
+
+.flag-icon {
+  margin-right: 5px;
+}
+
+/*actions & Enabled button*/
+.mat-raised-button.actions-button {
+  padding: 0px;
+  min-width: 60px;
+}
+
+.actions-width {
+  flex: 0 0 auto !important;
+  width: 45px !important;
+  padding: 2px;
+}
+
+.enabled-button{
+  flex: 0 0 auto !important;
+  width: 45px !important;
+}
+
+/*font style*/
+
+
+/* font-style:normal
+font-style:italic
+font-style:oblique */
+
+
+/* font-weight: normal}
+font-weight: bold
+font-weight: 900 */
+
+.text-bold {
+  font-weight: bold
+}
+
+.text-italic {
+  font-style: italic
+}
+
+.text-bold-italic{
+  font-weight: bold;
+  font-style: italic;
+}
+
+
+/*dialog-progress-bar*/
+.dialog-progress-bar {
+  margin-left: -24px;
+  margin-right: -24px;
+  margin-top:-24px;
+  width: auto !important;
+}
+/*common bg-warn*/
+.bg-warn {
+  background-color: #f44336;
+  color: white;
+}
+
+/*pull-right*/
+.pull-right {
+  float: right;
+}
+
+/*little chip*/
+
+.little-chip.mat-chip{
+  padding: 2px 3px !important;
+}
+
+/*dialog-content-padding*/
+.dialog-content {
+  padding-top: 15px !important;
+  padding-bottom: 15px !important;
+}

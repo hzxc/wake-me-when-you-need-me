@@ -1,0 +1,21 @@
+<button
+mat-icon-button
+matTooltip="Color Schemes"
+id="btn-theme"
+[matMenuTriggerFor]="themeMenu">
+  <mat-icon>format_color_fill</mat-icon>
+</button>
+
+<mat-menu class="theme-switcher-menu" #themeMenu="matMenu">
+    <mat-grid-list cols="2">
+      <mat-grid-tile
+      *ngFor="let theme of themes">
+      <button
+      mat-mini-fab
+      [style.background-color]="theme.baseColor"
+      (click)="changeTheme(theme)">
+        <mat-icon *ngIf="theme.isActive">check</mat-icon>
+      </button>
+      </mat-grid-tile>
+</mat-grid-list>
+</mat-menu>

@@ -1,0 +1,20 @@
+<mat-progress-bar [mode]="loading? 'indeterminate':'Determinate'" class="dialog-progress-bar" color="Primary">
+</mat-progress-bar>
+<span mat-dialog-title style="text-align:center">
+  {{l("ChangeProfilePicture")}}
+</span>
+<mat-dialog-content class="dialog-content">
+  <div fxLayout="column" fxLayoutAlign="space-between stretch">
+    <input type="file" ng2FileSelect [uploader]="uploader" />
+    <mat-chip-list style="margin-top:4px;margin-bottom:4px;">
+      <mat-chip class="little-chip" color="warn" selected="true">
+        <span>{{l("ProfilePicture_Change_Info")}}</span>
+      </mat-chip>
+    </mat-chip-list>
+    <img #ProfilePictureResize [hidden]="!temporaryPictureUrl" />
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+  <button mat-raised-button [disabled]="loading" color="accent" mat-dialog-close>{{l('Cancel')}}</button>
+  <button mat-raised-button [disabled]="loading" color="accent" (click)="save()">{{l('Save')}}</button>
+</mat-dialog-actions>

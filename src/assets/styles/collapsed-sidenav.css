@@ -1,0 +1,64 @@
+/*------- Collapsed Sidenav -------*/
+.collapsed-menu .sidebar-panel {
+  width: 40px;
+  min-width: 40px;
+  overflow: visible !important;
+}
+
+.collapsed-menu .sidebar-panel .icon-menu {
+  padding: 0;
+}
+
+.collapsed-menu .sidebar-panel .sidebar-list-item > .mat-list-item-content > a {
+  position: relative;
+  padding: 0;
+}
+.collapsed-menu .sidebar-panel .sidebar-list-item > .mat-list-item-content > a .menu-item-tooltip {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  height: 40px;
+  width: 40px;
+  background: transparent;
+}
+
+.collapsed-menu .sidebar-panel .sidebar-list-item.open .sub-menu {
+  position: absolute;
+  left: 40px;
+  top: 0;
+  width: 200px;
+  background: #fff;
+  display: block;
+  max-height: 200px !important;
+  overflow-y: scroll;
+  box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+}
+.collapsed-menu .sidebar-panel .sidebar-list-item.open .sub-menu .mat-list-item a {
+  padding-left: 1rem;
+}
+.collapsed-menu .sidebar-panel .mat-nav-list > div > .sidebar-list-item a .mat-icon {
+  margin: 0;
+}
+.collapsed-menu .sidebar-panel .mat-nav-list > div > .sidebar-list-item a span:not(.menu-item-tooltip),
+.collapsed-menu .sidebar-panel .mat-nav-list > div > .sidebar-list-item a .menu-caret,
+.collapsed-menu .sidebar-panel .sub-menu {
+  display: none;
+}
+
+.collapsed-menu .app-side-nav-container > .mat-drawer-content {
+  margin-left: 40px !important;
+}
+.collapsed-menu #sidenavToggle {
+  display: none;
+}
+
+.toggle-collapsed {
+  transform: rotate(0deg);
+  -webkit-transition: transform .3s cubic-bezier(.35,0,.25,1);
+  transition: transform .3s cubic-bezier(.35,0,.25,1);
+}
+
+.collapsed-menu .toggle-collapsed {
+  transform: rotate(180deg);
+}

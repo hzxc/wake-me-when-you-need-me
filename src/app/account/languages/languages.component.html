@@ -1,0 +1,11 @@
+<div class="languages-container">
+  <mat-grid-list  [cols]="languages.length" rowHeight="20">
+    <mat-grid-tile *ngFor="let language of languages" >
+        <a href="javascript:void();"
+          title="{{language.displayName}}"
+          (click)="changeLanguage(language.name)">
+          <div class="{{language.icon}}"></div></a>
+      <!-- <div class="famfamfam-flags cn"></div> -->
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

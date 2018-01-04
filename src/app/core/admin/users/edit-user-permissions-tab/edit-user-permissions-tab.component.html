@@ -1,0 +1,13 @@
+<div class="permission-container">
+  <mat-chip-list>
+    <mat-chip color="accent" selected="true">{{l('Note_RefreshPageForPermissionChanges')}}</mat-chip>
+  </mat-chip-list>
+  <app-permission-tree #permissionTree></app-permission-tree>
+  <div class="permission-actions" *ngIf="!saving">
+    <button (click)="resetPermissions()" mat-raised-button matTooltip="{{l('ResetPermissionsTooltip')}}" matTooltipPosition="above"
+      color="warn">{{l("ResetSpecialPermissions")}}</button>
+    <button (click)="save()" mat-raised-button color="primary">{{l("Save")}}</button>
+    <button (click)="cancel()" mat-raised-button color="accent">{{l("Cancel")}}</button>
+  </div>
+  <mat-progress-spinner *ngIf="saving" mode="indeterminate" diameter="40"></mat-progress-spinner>
+</div>
